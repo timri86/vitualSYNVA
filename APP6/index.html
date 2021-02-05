@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>video</title>
+    <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+    <script>
+        AFRAME.registerComponent('play-pause',{
+            init:function(){
+                let myvideo=document.getElementById('video');
+                let button=document.getElementById('controls-video');
+                this.el.addEventListener('click', function(){
+                    if(myvideo.paused){
+                        myvideo.play();
+                        button.setAttribute('src','#pause')
+                    }else{
+                        myvideo.pause();
+                        button.setAttribute('src','#play')
+                    }
+                })
+            }
+
+        })
+    </script>
+</head>
+<body>
+<a-scene>
+    <a-assets>
+        <video id="video" src="videos/video.mp4" loop="true"></video>
+        <img id="play" src="videos/play.png">
+        <img id="pause" src="videos/pause.png">
+    </a-assets>
+    <a-videosphere src="#video"></a-videosphere>
+    <a-image id="controls-video" src="#play" position="0 1 -2" scale="0.2 0.2 1" play-pause>
+    </a-image>
+    <a-camera>
+        <a-entity cursor position="0 0 -1"
+                    geometry="primitive:sphere; radius:0.05"
+                    material="color:#ffffff; shader:flat; opacity:O.5">
+        </a-entity>
+    </a-camera>
+</a-scene>
+
+</body>
+</html>
