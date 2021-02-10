@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+    <title>Audio</title>
+</head>
+<body>
+<a-scene>
+    <a-assets>
+        <audio id="river" src="audio/song1.mp3" preload="auto"></audio>
+    </a-assets>
+    <a-sphere position="1 2 -6" color="red" sound="src: #river"></a-sphere>
+</a-scene>
+
+
+
+</body>
+</html>

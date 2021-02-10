@@ -7,7 +7,7 @@
     <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
 </head>
 <body>
-    <a-scene>
+    <a-scene id="scene" >
         <a-assets>
 
 
@@ -17,18 +17,54 @@
                       geometry="primitive: sphere; radius: 0.01"
                       material="color: #000000; shader: flat; opacity: 0.5">
             </a-entity>
+
         </a-camera>
+        <a-text id="name" font="kelsonsans" value="Bonjour richard" width="6" position="0 5 -6" color="black"></a-text>
+        <a-text id="score" font="kelsonsans" value="Score: 00" width="6" position="3 5 -6" color="black"></a-text>
         <a-box color="red" position="-2 0 -7"
                event-set__enter="_event: mouseenter; material.color:blue"
                event-set__leave="_event: mouseleave; material.color:red"
-               event-set__click="_event: click; material.color:orange">
+               event-set__click="_event: click; _target:#orange; scale: 2 2 2 ">
         </a-box>
-        <a-box color="orange" position="-2 3 -7"></a-box>
-        <a-box color="green" position="0 0 -7"></a-box>
-        <a-box color="black" position="0 3 -7"></a-box>
-        <a-box color="blue" position="2 0 -7"></a-box>
-        <a-box color="grey" position="2 3 -7"></a-box>
+        <a-box id="orange" color="orange" position="-2 3 -7"
+               event-set__visibility="_event: click; visible:false"></a-box>
+        <a-box id="green" color="green" position="0 0 -7" visible="false"></a-box>
+        <a-box color="black" position="0 3 -7"
+                    event-set__visibility="_event:click; _target:#green; visible:true "></a-box>
+        <a-box color="blue" position="2 0 -7" id="blue"></a-box>
+        <a-sphere id="grey" color="grey" position="2 3 -7" inc-score></a-sphere>
     </a-scene>
+
+    <script>
+        let name=document.getElementById('name');
+        let score=document.getElementById('score');
+        let lname=localStorage.getItem("prenom");
+        let lscore=localStorage.getItem("score");
+
+        name.setAttribute("value","Bienvenue "+lname);
+        score.setAttribute("value","score= "+lscore);
+        let grey=document.getElementById('grey');
+        let blue=document.getElementById('blue');
+        grey.addEventListener('click', function(){
+            let score=document.getElementById('score');
+            let lscore=localStorage.getItem("score");
+            lscore++;
+            score.setAttribute("value","score= "+lscore);
+            localStorage.setItem("score",lscore)
+        });
+        blue.addEventListener('click', function(){
+            let score=document.getElementById('score');
+            let lscore=localStorage.getItem("score");
+            lscore--;
+            score.setAttribute("value","score= "+lscore);
+            localStorage.setItem("score",lscore);
+            if (lscore<0){
+                localStorage.clear();
+                location.href = "../APP9/index.html";
+            }
+        });
+
+    </script>
 
 </body>
 </html>
